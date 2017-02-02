@@ -128,7 +128,7 @@ Above methods are applied only while training the network. No changes are made i
  2. CNN-RNN Model
 Since the dataset include spatial and temporal information, getting the network to learn spatial/temporal representation should make it robust. Below architecture was used to train the network.
 
-![image7](https://cloud.githubusercontent.com/assets/17127066/22474871/447f700c-e803-11e6-8b4e-12e7094eafe0.png)
+![image7](https://cloud.githubusercontent.com/assets/17127066/22541035/e39dd718-e949-11e6-97b3-17e39ca060a4.PNG)
 
 
 However, model could not be executed using simulator in autonomous mode. Assume, the simulator is not designed to accept two inputs. 
@@ -137,7 +137,7 @@ Ref: https://carnd-forums.udacity.com/questions/19991297/using-left-and-right-ca
 
 **Final Model**
 
-![image8](https://cloud.githubusercontent.com/assets/17127066/22474872/44b880f4-e803-11e6-80e1-3e6e090cb9b6.png)
+![image8](https://cloud.githubusercontent.com/assets/17127066/22541037/e6c06a0a-e949-11e6-96e0-430f04c190b6.PNG)
 
 |Layer (type)                     |Input Shape	       |Output Shape        |Param #     
 |:-------			  |----:               |----:	            |:---:

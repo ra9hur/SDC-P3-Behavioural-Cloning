@@ -136,81 +136,74 @@ Ref: https://carnd-forums.udacity.com/questions/19991297/using-left-and-right-ca
 
 ![image8](https://cloud.githubusercontent.com/assets/17127066/22474872/44b880f4-e803-11e6-80e1-3e6e090cb9b6.png)
 
-___________________________________________________________________
-Layer (type)                     Output Shape          Param #     
-===================================================================
-lambda_1 (Lambda)                (None, 3, 40, 120)    0           
-___________________________________________________________________
-convolution2d_1 (Convolution2D)  (None, 32, 20, 60)    896         
-___________________________________________________________________
-maxpooling2d_1 (MaxPooling2D)    (None, 32, 10, 30)    0           
-___________________________________________________________________
-convolution2d_2 (Convolution2D)  (None, 32, 5, 15)     9248        
-___________________________________________________________________
-maxpooling2d_2 (MaxPooling2D)    (None, 32, 2, 7)      0           
-___________________________________________________________________
-convolution2d_3 (Convolution2D)  (None, 64, 2, 7)      18496       
-___________________________________________________________________
-maxpooling2d_3 (MaxPooling2D)    (None, 64, 1, 3)      0           
-___________________________________________________________________
-flatten_1 (Flatten)              (None, 192)           0           
-___________________________________________________________________
-activation_1 (Activation)        (None, 192)           0           
-___________________________________________________________________
-dense_1 (Dense)                  (None, 500)           96500       
-___________________________________________________________________
-dropout_1 (Dropout)              (None, 500)           0           
-___________________________________________________________________
-dense_2 (Dense)                  (None, 200)           100200      
-___________________________________________________________________
-dropout_2 (Dropout)              (None, 200)           0           
-___________________________________________________________________
-dense_3 (Dense)                  (None, 50)            10050       
-___________________________________________________________________
-dropout_3 (Dropout)              (None, 50)            0           
-___________________________________________________________________
-dense_4 (Dense)                  (None, 1)             51          
-===================================================================
-Total params: 235,441
+|Layer (type)                     |Input Shape	       |Output Shape        |Param #     
+|:-------			  |----:               |----:	            |:---:
+|lambda_1 (Lambda)                |(64, 3, 40, 120)    |(64, 3, 40, 120)    |0           
+|convolution2d_1 (32,3x3,Stride=2)|(64, 3, 40, 120)    |(64, 32, 20, 60)    |896         
+|maxpooling2d_1 (MaxPooling2D,2x2)|(64, 32, 20, 60)    |(64, 32, 10, 30)    |0           
+|convolution2d_2 (32,3x3,Stride=2)|(64, 32, 10, 30)    |(64, 32, 5, 15)     |9248        
+|maxpooling2d_2 (MaxPooling2D,2x2)|(64, 32, 5, 15)     |(64, 32, 2, 7)      |0           
+|convolution2d_3 (64,3x3,Stride=2)|(64, 32, 2, 7)      |(64, 64, 2, 7)      |18496       
+|maxpooling2d_3 (MaxPooling2D,2x2)|(64, 64, 2, 7)      |(64, 64, 1, 3)      |0           
+|flatten_1 (Flatten)              |(64, 64, 1, 3)      |(64, 192)           |0           
+|activation_1 (Activation)        |(64, 192)           |(64, 192)           |0           
+|dense_1 (Dense)                  |(64, 192)           |(64, 500)           |96500       
+|dropout_1 (Dropout)              |(64, 500)           |(64, 500)           |0           
+|dense_2 (Dense)                  |(64, 500)           |(64, 150)           |75150       
+|dropout_2 (Dropout)              |(64, 150)           |(64, 150)           |0           
+|dense_3 (Dense)                  |(64, 150)           |(64, 50)            |7550       
+|dropout_3 (Dropout)              |(64, 50)            |(64, 50)            |0           
+|dense_4 (Dense)                  |(64, 50)            |(64, 1)             |51          
+Total params: 207,891
+Trainable params: 207,891
+Non-trainable params: 0
 
 ----------
 
 6. Training
 -------------
- - Why mse to measure loss < check >
-Mean square error itself is not a good metrics to judge the model is good or not. It has to be tested by the simulator. I found over fitting is a big issue here. Extreme low loss often means overfitting. So I used callback to save weights for each epoch, and try to test weights for each epoch. With my model, epoch 5-8 normally gave reliable result. More than 8 epoch has lower loss but perform much worse. Different model can be different but It looks like more epoch doesn't really help much.
-< include in fine-tuning as well >
- - Training is done on a laptop with 4GB RAM, 2GB GPU (nvidia geforce
-   840M) and Ubuntu 16.04. Considering the hardware constraints, number of epochs is kept minimum. Also, batch-size of 64 is
-   considered to ensure, we do not run out of GPU memory during the
-   training process. 
- - No. of epochs: 3 
- - Optimizer: Adam Optimizer 
- - Images generated per epoch: 20,000 images generated on the fly
- - Validation Set: 3000 images, generated on the fly 
- - No test set used, since the success of the model is evaluated by how well it drives on the road and not by test set loss 
+**Approach**
+Training is done on a laptop with 4GB RAM, 2GB GPU (nvidia geforce 840M) and Ubuntu 16.04. Considering the hardware constraints, batch-size of 64 is considered to ensure, we do not run out of GPU memory during the training process. Also, images are loaded to memory in small batches using generators (refer 4. Data Augmentation)
+
+This project is a regression problem. So, it makes sense to use typical regression loss functions such as MSE (mean squared error). 
+After training the model for a few epochs, it is tested on Track1. The epoch with the lowest validation loss is not the necessarily the best performing model, and it may even be the model that crashes the car. The final test of how well your model generalises is to let the car run on Track 2 and see how it performs there. 
+
+**Training Parameters**
+
+ - Number of epochs: 3 
+ - Optimizer: Adam
+ - Training sample size per epoch: 6400
+ - Validation sample size per epoch: 1600 
+ - The car's performance on the simulator is tested only for, 
+  - 640x480 screen resolution 
+  - "Fastest" graphics quality
+ - No test set used, since the success of the model is evaluated by how well it drives on the road and not by test set loss
  - Generalization:
-   - Data augmentation
-   - Drop-out
-   - Batch normalization - did not yield good results
-   - L2 regularization with weight decay of 0.0001 - did not yield good results
+    - Data augmentation 
+    - Batch normalization - did not yield good results 
+    - L2 regularisation with weight decay of 0.0001 - did not yield good results
 
 ----------
 
 7. Fine-tuning
 -------------
-Credit to Vivek
-drive.py - throttle adjustments
+**Throttle adjustments**
+Throttle level in ‘drive’py’ is initially set to 0.2. This means that the car would have the same throttle at all stretches irespective of whether it going straight and making turns to the left / right. This parameter now varies with speed and does not crash as it turns.
 
-Recovery training
+**Last lap in Track2**
 
-Checkpoint to save best_weights
+< image 8> 
+As in the image, this is the last turn before reaching goal in Track2. The car would often go straight and may be, the model is getting confused with the road colour and that of moutain rocks. At epoch 27, the car hit arrow 3 from the right. Had to continue training till epoch 52 before the car could successfully and turn move towards the goal barriers.
+
+**Saving / loading weights from previous runs / epocs**
+Since training continued till epoch 52, there were a lot of trial and error checks made in between to check if the model worked. It was not feasible to run training till epoch 52 at one time. As I found that the model made good progress compared to previous runs, weights were saved and this was used as initial weights for subsequent epochs. 
+Checkpoints to save weights was effectively used to save weights for all epochs. This made it easier to run multiple epochs at one time and check saved weights using simulator.
 
 ----------
 
 8. Further Improvements
 -------------
-1. The car does well on Track 2 for about a minute before hitting the side ramp. With fine-tuning, it could be taken further.
+1. Car's performance can further be improved by testing the simulator for all combinations of screen resolutions and graphics quality
 2. Additional data under different driving conditions should significantly boost the performance of the model.
 3. The car tends to steer from side to side sometimes and can be generalised to make it steady
 4. The model could have fewer layers and parameters.

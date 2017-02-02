@@ -20,6 +20,7 @@ IMG folder - this folder contains all the image frames of driving.
 driving_log.csv - each row in this sheet correlates image with the steering angle, throttle, brake, and speed of your car. Only steering angle data is used for this project.
 
 **Images**
+
 The IMG folder contains about 24,000 JPG images of dimensions 320x160x3. Here are some sample images from the dataset.
 
 ![image1](https://cloud.githubusercontent.com/assets/17127066/22473360/ace1c0dc-e7fe-11e6-96c4-f2e31fa65f97.png)
@@ -89,11 +90,13 @@ Since simulator in autonomous mode considers just the 'center' images, adjusting
  - Track 1 autonomous mose in the simulator is mostly sunny. Most of the images in udacity training data includes roads in sunny scenario. However, track 2 involves sunny and darker sections. Data needs to be augmented to address this scenario.
 
 **Generator**
+
 Training data size is about 350 MB [(120x40x3)*24000]. For the back-propagation to compute gradient, requires twice the memory size that is required for the forward pass.
 Training is done on a laptop with 4GB RAM, 2GB GPU (nvidia geforce 840M) and Ubuntu 16.04. Considering the large dataset size and given the system constraint, I had to get images loaded to memory in small batches. 
 Keras makes use of that property with its fit_generator function, which expects input presented as generators that infinitely recycle over the underlying data.
 
 *Keras ImageDataGenerator*
+
 Explored Keras ImageDataGenerator to augment images. 
 
  - I could not find a way to adjust brightness through parameters. 
@@ -154,9 +157,10 @@ Ref: https://carnd-forums.udacity.com/questions/19991297/using-left-and-right-ca
 |dense_3 (Dense)                  |(64, 150)           |(64, 50)            |7550       
 |dropout_3 (Dropout)              |(64, 50)            |(64, 50)            |0           
 |dense_4 (Dense)                  |(64, 50)            |(64, 1)             |51          
-Total params: 207,891
-Trainable params: 207,891
-Non-trainable params: 0
+
+ Total params: 207,891
+ Trainable params: 207,891
+ Non-trainable params: 0
 
 ----------
 
@@ -170,7 +174,7 @@ After training the model for a few epochs, it is tested on Track1. The epoch wit
 
 **Training Parameters**
 
- - Number of epochs: 3 
+ - Number of epochs: 52 
  - Optimizer: Adam
  - Training sample size per epoch: 6400
  - Validation sample size per epoch: 1600 
@@ -192,7 +196,7 @@ Throttle level in ‘drive’py’ is initially set to 0.2. This means that the 
 
 **Last lap in Track2**
 
-< image 8> 
+![image9](https://cloud.githubusercontent.com/assets/17127066/22540050/ebb57560-e943-11e6-8fbe-3ea0aa538c87.png)
 As in the image, this is the last turn before reaching goal in Track2. The car would often go straight and may be, the model is getting confused with the road colour and that of moutain rocks. At epoch 27, the car hit arrow 3 from the right. Had to continue training till epoch 52 before the car could successfully and turn move towards the goal barriers.
 
 **Saving / loading weights from previous runs / epocs**

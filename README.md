@@ -158,9 +158,9 @@ Ref: https://carnd-forums.udacity.com/questions/19991297/using-left-and-right-ca
 |dropout_3 (Dropout)              |(64, 50)            |(64, 50)            |0           
 |dense_4 (Dense)                  |(64, 50)            |(64, 1)             |51          
 
- Total params: 207,891
- Trainable params: 207,891
- Non-trainable params: 0
+ - Total params: 207,891 
+ - Trainable params: 207,891 
+ - Non-trainable params: 0
 
 ----------
 
@@ -197,6 +197,7 @@ Throttle level in ‘drive’py’ is initially set to 0.2. This means that the 
 **Last lap in Track2**
 
 ![image9](https://cloud.githubusercontent.com/assets/17127066/22540050/ebb57560-e943-11e6-8fbe-3ea0aa538c87.png)
+
 As in the image, this is the last turn before reaching goal in Track2. The car would often go straight and may be, the model is getting confused with the road colour and that of moutain rocks. At epoch 27, the car hit arrow 3 from the right. Had to continue training till epoch 52 before the car could successfully and turn move towards the goal barriers.
 
 **Saving / loading weights from previous runs / epocs**

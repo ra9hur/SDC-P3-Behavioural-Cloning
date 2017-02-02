@@ -192,6 +192,7 @@ After training the model for a few epochs, it is tested on Track1. The epoch wit
 7. Fine-tuning
 -------------
 **Throttle adjustments**
+
 Throttle level in ‘drive’py’ is initially set to 0.2. This means that the car would have the same throttle at all stretches irespective of whether it going straight and making turns to the left / right. This parameter now varies with speed and does not crash as it turns.
 
 **Last lap in Track2**
@@ -201,6 +202,7 @@ Throttle level in ‘drive’py’ is initially set to 0.2. This means that the 
 As in the image, this is the last turn before reaching goal in Track2. The car would often go straight and may be, the model is getting confused with the road colour and that of moutain rocks. At epoch 27, the car hit arrow 3 from the right. Had to continue training till epoch 52 before the car could successfully and turn move towards the goal barriers.
 
 **Saving / loading weights from previous runs / epocs**
+
 Since training continued till epoch 52, there were a lot of trial and error checks made in between to check if the model worked. It was not feasible to run training till epoch 52 at one time. As I found that the model made good progress compared to previous runs, weights were saved and this was used as initial weights for subsequent epochs. 
 Checkpoints to save weights was effectively used to save weights for all epochs. This made it easier to run multiple epochs at one time and check saved weights using simulator.
 

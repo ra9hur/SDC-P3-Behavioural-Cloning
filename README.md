@@ -36,7 +36,7 @@ The left and right cameras point straight, along the length of the car.
 Considering the distribution of steering angles, most of them are close to zero and is slightly unbalanced. There is a bias towards driving straight and a bit for turning left. 
 
  - Data needs to be augmented for right turns.
- - Considering that in real-time, car tends to move straight for a longer time, decided not to prune data corresponding to zero angles.
+ - In real-time, car tends to move straight for a longer time, hence decided not to prune data corresponding to zero angles.
 
 **driving_log.csv – Steering Angle Vs Frames (against time)**
 
@@ -123,10 +123,11 @@ Above methods are applied only while training the network. No changes are made i
 -------------
 **Alternatives assessed**
 
- 1. Nvidia, Comma.ai architectures – Looked at respective documentation to get a handle of these architectures. Have borrowed a few good implementation practices for the custom model.
+ 1. Nvidia, Comma.ai architectures – 
+ Looked at respective documentation to get a handle of these architectures. Have borrowed a few good implementation practices for the custom model.
 
- 2. CNN-RNN Model
-Since the dataset include spatial and temporal information, getting the network to learn spatial/temporal representation should make it robust. Below architecture was used to train the network.
+ 2. CNN-RNN Model - 
+ Since the dataset include spatial and temporal information, getting the network to learn spatial/temporal representation should make it robust. Below architecture was used to train the network.
 
 ![image7](https://cloud.githubusercontent.com/assets/17127066/22541035/e39dd718-e949-11e6-97b3-17e39ca060a4.PNG)
 
@@ -193,13 +194,13 @@ After training the model for a few epochs, it is tested on Track1. The epoch wit
 -------------
 **Throttle adjustments**
 
-Throttle level in ‘drive’py’ is initially set to 0.2. This means that the car would have the same throttle at all stretches irespective of whether it going straight and making turns to the left / right. This parameter now varies with speed and does not crash as it turns.
+Throttle level in ‘drive’py’ is initially set to 0.2. This means that the car would have the same throttle at all stretches irespective of whether it going straight OR making turns to the left / right. This parameter now varies with speed and does not crash as it turns.
 
 **Last lap in Track2**
 
 ![image9](https://cloud.githubusercontent.com/assets/17127066/22540050/ebb57560-e943-11e6-8fbe-3ea0aa538c87.png)
 
-As in the image, this is the last turn before reaching goal in Track2. The car would often go straight and may be, the model is getting confused with the road colour and that of moutain rocks. At epoch 27, the car hit arrow 3 from the right. Had to continue training till epoch 52 before the car could successfully and turn move towards the goal barriers.
+As in the image, this is the last turn before reaching goal in Track2. The car would often go straight and may be, the model is getting confused with the road colour and that of mountain rocks. At epoch 27, the car hit arrow 3 from the right. Had to continue training till epoch 52 before the car could successfully turn and move towards the goal barriers.
 
 **Saving / loading weights from previous runs / epocs**
 

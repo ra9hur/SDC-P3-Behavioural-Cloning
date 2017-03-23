@@ -1,4 +1,7 @@
-1. Problem Definition - About Project
+# SDC-P3-Behavioural-Cloning
+
+----------
+**1. Problem Definition - About Project**
 -------------
 The project objective is to implement behavioural cloning – technique whereby, students are required to drive a simulated car, collect data from sensors (camera). 
 
@@ -10,8 +13,7 @@ Assumption:
 The car is expected to move within driveable portion of the track surface. It need not be aware of other vehicles on the road.
 
 ----------
-
-2. Dataset Summary & Exploration
+**2. Dataset Summary & Exploration**
 -------------
 Collecting data on my own got a bit difficult considering the choices between a keyboard or mouse to control the simulator. However, data provided by Udacity was sufficient and was used to train the network.
 
@@ -49,8 +51,7 @@ Plotting the steering angle against time, we see that frames seem to be continuo
  - So, if we choose to allow the network to learn spatial and temporal features, the network will have two inputs and input data should be prepared accordingly
 
 ----------
-
-3. Image pre-processing
+**3. Image pre-processing**
 -------------
 
 **Analysis**
@@ -80,8 +81,7 @@ Ref: https://chatbotslife.com/using-augmentation-to-mimic-human-driving-496b5697
 Since simulator in autonomous mode considers just the 'center' images, adjusting steering angles for pre-processing in ‘drive.py’ is not applicable
 
 ----------
-
-4. Data Augmentation
+**4. Data Augmentation**
 -------------
 **Analysis**
  
@@ -118,8 +118,7 @@ Ref: https://www.youtube.com/watch?v=bD05uGo_sVI&index=21&list=PL-osiE80TeTt2d9b
 Above methods are applied only while training the network. No changes are made in ‘drive.py’
 
 ----------
-
- 5. Model Architecture
+**5. Model Architecture**
 -------------
 **Alternatives assessed**
 
@@ -164,8 +163,7 @@ Ref: https://carnd-forums.udacity.com/questions/19991297/using-left-and-right-ca
  - Non-trainable params: 0
 
 ----------
-
-6. Training
+**6. Training**
 -------------
 **Approach**
 Training is done on a laptop with 4GB RAM, 2GB GPU (nvidia geforce 840M) and Ubuntu 16.04. Considering the hardware constraints, batch-size of 64 is considered to ensure, we do not run out of GPU memory during the training process. Also, images are loaded to memory in small batches using generators (refer 4. Data Augmentation)
@@ -189,8 +187,7 @@ After training the model for a few epochs, it is tested on Track1. The epoch wit
     - L2 regularisation with weight decay of 0.0001 - did not yield good results
 
 ----------
-
-7. Fine-tuning
+**7. Fine-tuning**
 -------------
 **Throttle adjustments**
 
@@ -208,8 +205,7 @@ Since training continued till epoch 52, there were a lot of trial and error chec
 Checkpoints to save weights was effectively used to save weights for all epochs. This made it easier to run multiple epochs at one time and check saved weights using simulator.
 
 ----------
-
-8. Further Improvements
+**8. Further Improvements**
 -------------
 1. Car's performance can further be improved by testing the simulator for all combinations of screen resolutions and graphics quality
 2. Additional data under different driving conditions should significantly boost the performance of the model.
